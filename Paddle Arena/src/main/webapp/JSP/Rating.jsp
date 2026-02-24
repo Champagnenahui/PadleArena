@@ -13,48 +13,25 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Paddle Arena - Bewertungen</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .navbar { background-color: #2c3e50; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar a { color: white; text-decoration: none; margin: 0 15px; }
-        .navbar .brand { font-size: 22px; font-weight: bold; color: #e74c3c; }
-        .container { max-width: 900px; margin: 30px auto; padding: 20px; }
-        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .card h2 { color: #2c3e50; margin-top: 0; }
-        .avg-rating { font-size: 24px; color: #e67e22; font-weight: bold; text-align: center; margin: 10px 0; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .form-group textarea { height: 80px; resize: vertical; }
-        .btn { padding: 10px 25px; border: none; border-radius: 4px; color: white; cursor: pointer; text-decoration: none; font-size: 14px; }
-        .btn-success { background-color: #27ae60; }
-        .btn-danger { background-color: #e74c3c; }
-        .btn:hover { opacity: 0.9; }
-        .rating-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .rating-item:last-child { border-bottom: none; }
-        .rating-stars { color: #f39c12; font-size: 18px; }
-        .rating-user { font-weight: bold; color: #2c3e50; }
-        .rating-comment { color: #555; margin-top: 5px; }
-        .error { color: #e74c3c; margin-bottom: 15px; padding: 10px; background: #ffeaea; border-radius: 4px; }
-    </style>
+    <title>Padel Colosseum - Bewertungen</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/Rating.css" />
 </head>
 <body>
     <div class="navbar">
-        <span class="brand">Paddle Arena</span>
+        <span class="brand">Padel Colosseum</span>
         <div>
-            <a href="JSP/Startseite.jsp">Startseite</a>
+            <a href="/Padle_Arena/JSP/Startseite.jsp">Startseite</a>
             <% if (loggedIn) { %>
-                <a href="BookingServlet">Buchungen</a>
+                <a href="${pageContext.request.contextPath}/BookingServlet">Buchungen</a>
             <% } %>
-            <a href="RatingServlet">Bewertungen</a>
+            <a href="${pageContext.request.contextPath}/RatingServlet">Bewertungen</a>
         </div>
         <div>
             <% if (loggedIn) { %>
                 <span style="color:white">Hallo, <%= userbean.getUser().getUsername() %></span> |
-                <a href="LoginServlet?action=logout" style="color:white">Abmelden</a>
+                <a href="${pageContext.request.contextPath}/LoginServlet?action=logout" style="color:white">Abmelden</a>
             <% } else { %>
-                <a href="LoginServlet" style="color:white">Anmelden</a>
+                <a href="${pageContext.request.contextPath}/LoginServlet" style="color:white">Anmelden</a>
             <% } %>
         </div>
     </div>
@@ -66,7 +43,7 @@
             <% if (error != null) { %>
                 <div class="error"><%= error %></div>
             <% } %>
-            <form action="RatingServlet" method="post">
+            <form action="${pageContext.request.contextPath}/RatingServlet" method="post">
                 <div class="form-group">
                     <label for="rating">Bewertung (1-5 Sterne)</label>
                     <select id="rating" name="rating" required>
@@ -105,7 +82,7 @@
                         </span>
                         <div class="rating-comment"><%= r.getComment() != null ? r.getComment() : "" %></div>
                         <% if (loggedIn && r.getUser().getUsername().equals(userbean.getUser().getUsername())) { %>
-                            <a href="RatingServlet?action=delete&ratingId=<%= r.getRatingId() %>" class="btn btn-danger" style="margin-top:5px; display:inline-block; font-size:12px; padding:5px 10px;">Loeschen</a>
+                            <a href="${pageContext.request.contextPath}/RatingServlet?action=delete&ratingId=<%= r.getRatingId() %>" class="btn btn-danger" style="margin-top:5px; display:inline-block; font-size:12px; padding:5px 10px;">Loeschen</a>
                         <% } %>
                     </div>
             <%  }

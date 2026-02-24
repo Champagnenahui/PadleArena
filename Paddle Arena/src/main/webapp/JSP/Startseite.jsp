@@ -6,62 +6,155 @@
     String username = loggedIn ? userbean.getUser().getUsername() : "";
 %>
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Paddle Arena - Startseite</title>
+    <title>Padel Colosseum - Startseite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/Startseite.css" />
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .navbar { background-color: #2c3e50; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar a { color: white; text-decoration: none; margin: 0 15px; font-size: 16px; }
-        .navbar a:hover { text-decoration: underline; }
-        .navbar .brand { font-size: 22px; font-weight: bold; color: #e74c3c; }
-        .navbar .user-info { color: #ecf0f1; }
-        .container { max-width: 900px; margin: 40px auto; padding: 20px; }
-        .welcome { background: white; padding: 40px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .welcome h1 { color: #2c3e50; }
-        .welcome p { color: #7f8c8d; font-size: 18px; }
-        .btn { display: inline-block; padding: 12px 30px; margin: 10px; border-radius: 5px; text-decoration: none; color: white; font-size: 16px; }
-        .btn-primary { background-color: #3498db; }
-        .btn-success { background-color: #27ae60; }
-        .btn-warning { background-color: #e67e22; }
-        .btn-danger { background-color: #e74c3c; }
-        .btn:hover { opacity: 0.9; }
+        body { margin: 0; padding: 0; }
+        .hero-section {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(30,30,30,0.7),rgba(30,30,30,0.7)), url('${pageContext.request.contextPath}/img/view.png') center/cover no-repeat;
+            color: #fff;
+            text-align: center;
+        }
+        .hero-section h1 { font-size: 3rem; font-weight: bold; }
+        .hero-section p { font-size: 1.5rem; margin-bottom: 2rem; }
+        .hero-section .btn { margin: 0 10px; }
+        .about-section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+        .about-section .about-text {
+            flex: 1 1 300px;
+            padding: 30px;
+        }
+        .about-section .about-img {
+            flex: 1 1 300px;
+            display: flex;
+            justify-content: center;
+        }
+        .about-section img {
+            max-width: 350px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .courts-section {
+            padding: 60px 0;
+            background: #fff;
+        }
+        .courts-section h2 { text-align: center; margin-bottom: 40px; }
+        .courts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .court-card {
+            background: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .court-card h3 { margin-bottom: 10px; }
+        .court-card p { color: #555; }
+        html { scroll-behavior: smooth; }
+        @media (max-width: 900px) {
+            .about-section { flex-direction: column; }
+            .about-section .about-img { margin-top: 30px; }
+        }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <span class="brand">Paddle Arena</span>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/JSP/Startseite.jsp">
+                    <img src="${pageContext.request.contextPath}/img/logo.png" alt="Padel Colosseum Logo" style="height:100px; vertical-align:middle;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#hero">Startseite</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Über uns</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#courts">Courts</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/RatingServlet">Bewertungen</a></li>
+                        <% if (loggedIn) { %>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/BookingServlet">Buchungen</a></li>
+                        <% } %>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/JSP/Impressum.jsp">Impressum</a></li>
+                        <% if (loggedIn) { %>
+                        <li class="nav-item"><span class="nav-link">Hallo, <%= username %></span></li>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/LoginServlet?action=logout">Abmelden</a></li>
+                        <% } else { %>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/LoginServlet">Anmelden</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-section" id="hero">
+        <h1>Wilkommen beim Padel Colosseum</h1>
+        <p>Padel Courts, Turniere, und Spaß jetzt anmelden und buchen.</p>
         <div>
-            <a href="JSP/Startseite.jsp">Startseite</a>
-            <% if (loggedIn) { %>
-                <a href="BookingServlet">Buchungen</a>
-                <a href="RatingServlet">Bewertungen</a>
-            <% } %>
+            <a href="${pageContext.request.contextPath}/LoginServlet" class="btn btn-primary btn-lg">Login</a>
+            <a href="${pageContext.request.contextPath}/LoginServlet?action=register" class="btn btn-success btn-lg">Register</a>
         </div>
-        <div class="user-info">
-            <% if (loggedIn) { %>
-                Hallo, <%= username %> |
-                <a href="LoginServlet?action=logout">Abmelden</a>
-            <% } else { %>
-                <a href="LoginServlet">Anmelden</a>
-            <% } %>
-        </div>
-    </div>
+    </section>
 
-    <div class="container">
-        <div class="welcome">
-            <h1>Willkommen bei Paddle Arena!</h1>
-            <p>Buche deinen Padel-Platz und bewerte dein Spielerlebnis.</p>
-
-            <% if (loggedIn) { %>
-                <a href="BookingServlet" class="btn btn-primary">Platz buchen</a>
-                <a href="RatingServlet" class="btn btn-success">Bewertungen ansehen</a>
-            <% } else { %>
-                <a href="LoginServlet" class="btn btn-primary">Anmelden</a>
-                <a href="LoginServlet?action=register" class="btn btn-success">Registrieren</a>
-            <% } %>
+    <section class="about-section" id="about">
+        <div class="about-text">
+            <h2>24/7 geöffnet – Dein Spiel. Deine Zeit.</h2>
+            <p>Im Padel Colosseum bestimmst du, wann gespielt wird. Wir sind 24 Stunden am Tag, 7 Tage die Woche für dich geöffnet – ohne Kompromisse. Frühtraining vor der Arbeit, Night Sessions mit deinem Team oder spontane Matches am Wochenende? Jederzeit möglich.
+				Unsere modernen Courts, das einfache Online-Buchungssystem und der flexible Zugang geben dir volle Freiheit. Keine festen Zeiten. Keine Ausreden. Nur Padel.
+				Das Spiel schläft nicht – und wir auch nicht.</p>
+            <p>High-End-Courts, smarter 24/7-Zugang und pure Arena-Atmosphäre. Bei uns zählt nur eins: spielen, kämpfen, gewinnen – jederzeit.</p>
         </div>
-    </div>
+        <div class="about-img">
+            <img src="${pageContext.request.contextPath}/img/outdoor.png" alt="Padel Colosseum" />
+        </div>
+    </section>
+
+    <section class="courts-section" id="courts">
+        <h2>Unsere Courts</h2>
+        <div class="courts-grid">
+            <div class="court-card">
+                <h3>Outdoor Court</h3>
+                <p>Genießen Sie das Spiel unter freiem Himmel auf unserem modernen Outdoor-Court.</p>
+            </div>
+            <div class="court-card">
+                <h3>Indoor Court</h3>
+                <p>Spielen Sie unabhängig vom Wetter auf unserem professionellen Indoor-Court.</p>
+            </div>
+
+            <div class="court-card">
+                <h3>Kids Court</h3>
+                <p>Speziell für Kinder und Familien – sicher, bunt und spaßig!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            &copy; 2026 Padel Colosseum. Alle Rechte vorbehalten.
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

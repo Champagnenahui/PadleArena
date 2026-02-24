@@ -19,40 +19,20 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Paddle Arena - Buchungen</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-        .navbar { background-color: #2c3e50; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        .navbar a { color: white; text-decoration: none; margin: 0 15px; }
-        .navbar .brand { font-size: 22px; font-weight: bold; color: #e74c3c; }
-        .container { max-width: 900px; margin: 30px auto; padding: 20px; }
-        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .card h2 { color: #2c3e50; margin-top: 0; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        .btn { padding: 10px 25px; border: none; border-radius: 4px; color: white; cursor: pointer; text-decoration: none; font-size: 14px; }
-        .btn-primary { background-color: #3498db; }
-        .btn-danger { background-color: #e74c3c; }
-        .btn:hover { opacity: 0.9; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #2c3e50; color: white; }
-        tr:hover { background-color: #f5f5f5; }
-        .error { color: #e74c3c; margin-bottom: 15px; padding: 10px; background: #ffeaea; border-radius: 4px; }
-    </style>
+    <title>Padel Colosseum - Buchungen</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/Booking.css" />
 </head>
 <body>
     <div class="navbar">
-        <span class="brand">Paddle Arena</span>
+        <span class="brand">Padel Colosseum</span>
         <div>
-            <a href="JSP/Startseite.jsp">Startseite</a>
-            <a href="BookingServlet">Buchungen</a>
-            <a href="RatingServlet">Bewertungen</a>
+            <a href="/Padle_Arena/JSP/Startseite.jsp">Startseite</a>
+            <a href="${pageContext.request.contextPath}/BookingServlet">Buchungen</a>
+            <a href="${pageContext.request.contextPath}/RatingServlet">Bewertungen</a>
         </div>
         <div>
             <span style="color:white">Hallo, <%= userbean.getUser().getUsername() %></span> |
-            <a href="LoginServlet?action=logout" style="color:white">Abmelden</a>
+            <a href="${pageContext.request.contextPath}/LoginServlet?action=logout" style="color:white">Abmelden</a>
         </div>
     </div>
 
@@ -62,7 +42,7 @@
             <% if (error != null) { %>
                 <div class="error"><%= error %></div>
             <% } %>
-            <form action="BookingServlet" method="post">
+            <form action="${pageContext.request.contextPath}/BookingServlet" method="post">
                 <div class="form-group">
                     <label for="courtId">Platz</label>
                     <select id="courtId" name="courtId" required>
@@ -107,7 +87,7 @@
                             <td><%= b.getEnde().format(fmt) %></td>
                             <td>
                                 <% if (b.getUser().getUsername().equals(userbean.getUser().getUsername())) { %>
-                                    <a href="BookingServlet?action=delete&bookingId=<%= b.getBookingId() %>" class="btn btn-danger">Loeschen</a>
+                                    <a href="${pageContext.request.contextPath}/BookingServlet?action=delete&bookingId=<%= b.getBookingId() %>" class="btn btn-danger">Loeschen</a>
                                 <% } %>
                             </td>
                         </tr>
