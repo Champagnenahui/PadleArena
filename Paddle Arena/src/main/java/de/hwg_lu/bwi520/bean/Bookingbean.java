@@ -2,6 +2,7 @@ package de.hwg_lu.bwi520.bean;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,8 @@ import de.hwg_lu.bwi520.modell.Courts;
 import de.hwg_lu.bwi520.modell.User;
 
 public class Bookingbean {
+
+    private static final int MAX_BUCHUNGSDAUER_STUNDEN = 2;
 
     private List<Booking> bookings;
     private List<Courts> courts;
@@ -31,10 +34,39 @@ public class Bookingbean {
             Bookingjdbc bookingJdbc = new Bookingjdbc(conn);
             Courtsjdbc courtsJdbc = new Courtsjdbc(conn);
 
+            
             Courts court = courtsJdbc.getCourtById(courtId);
             if (court == null) {
                 this.errorMessage = "Platz nicht gefunden.";
                 return false;
+            }
+
+            
+            if (ende.isBefore(start) || ende.isEqual(start)) {
+                this.errorMessage = "Endzeit muss nach Startzeit liegen.";
+                return false;
+            }
+
+            
+            Duration dauer = Duration.between(start, ende);
+            if (dauer.toMinutes() > MAX_BUCHUNGSDAUER_STUNDEN * 60) {
+                this.errorMessage = "Maximale Buchungsdauer betraegt " + MAX_BUCHUNGSDAUER_STUNDEN
+                        + " Stunden. Deine Buchung ist " + dauer.toHours() + "h " + (dauer.toMinutes() % 60) + "min lang.";
+                return false;
+            }
+
+            
+            List<Booking> alleBookings = bookingJdbc.getAllBookings();
+            for (Booking bestehend : alleBookings) {
+                if (bestehend.getCourt().getCourtId() == courtId) {
+                    if (start.isBefore(bestehend.getEnde()) && ende.isAfter(bestehend.getStart())) {
+                        this.errorMessage = "Der Platz \"" + court.getName()
+                                + "\" ist in diesem Zeitraum bereits gebucht ("
+                                + bestehend.getStart().toLocalTime() + " - "
+                                + bestehend.getEnde().toLocalTime() + ").";
+                        return false;
+                    }
+                }
             }
 
             Booking booking = new Booking(0, user, court, start, ende);
@@ -110,3 +142,4 @@ public class Bookingbean {
         return errorMessage;
     }
 }
+
