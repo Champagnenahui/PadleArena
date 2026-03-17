@@ -77,6 +77,8 @@
         }
         .court-card h3 { margin-bottom: 10px; }
         .court-card p { color: #555; }
+       
+  
         html { scroll-behavior: smooth; }
         footer a:hover {
             color: #ffc107 !important;
@@ -123,7 +125,7 @@
 
     <section class="hero-section" id="hero">
         <h1>Willkommen beim Padel Colosseum</h1>
-        <p>Padel Courts, Turniere, und Spaß jetzt anmelden und buchen.</p>
+        <p>Padel Courts jetzt anmelden und buchen.</p>
         <div>
             <% if (loggedIn) { %>
                 <h2 style="color: #fff; margin-bottom: 30px;">Hallo <%= username %>!</h2>

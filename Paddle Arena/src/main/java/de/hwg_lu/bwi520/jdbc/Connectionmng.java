@@ -18,7 +18,7 @@ public class Connectionmng {
     private static final String DB_SCHEMA = "bwi520_638326";
 
     private Connectionmng() {
-        // Utility-Klasse, nicht instanziierbar
+        
     }
 
     private static void setSchema(Connection connection, String schema) throws SQLException {
@@ -59,7 +59,7 @@ public class Connectionmng {
             instance = null;
         }
     }
-
+// main um tabell zu erzeugen
     public static void main(String[] args) {
         try {
             Connection conn = Connectionmng.getSharedConnection();

@@ -180,12 +180,12 @@ body {
     color: #555; 
 }
 
-/* Global */
+
 html { 
     scroll-behavior: smooth; 
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .about-section { 
         flex-direction: column; 

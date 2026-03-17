@@ -42,9 +42,9 @@ public class Userjdbc {
         }
     }
 
-    // =========================
+
     // CREATE
-    // =========================
+
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO users (username, password, \"firstName\", \"lastName\", email, phone) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -58,9 +58,9 @@ public class Userjdbc {
         }
     }
 
-    // =========================
+  
     // READ - Login (find by username + password)
-    // =========================
+
     public User findUser(String username, String password) throws SQLException {
         String sql = "SELECT username, password, \"firstName\", \"lastName\", email, phone FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -82,9 +82,9 @@ public class Userjdbc {
         return null;
     }
 
-    // =========================
+   
     // READ - Find by username
-    // =========================
+   
     public User findByUsername(String username) throws SQLException {
         String sql = "SELECT username, password, \"firstName\", \"lastName\", email, phone FROM users WHERE username = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -106,8 +106,8 @@ public class Userjdbc {
     }
 
     // =========================
-    // READ ALL
-    // =========================
+    // READ ALL user 
+  
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<>();
         String sql = "SELECT username, password FROM users";
@@ -120,9 +120,9 @@ public class Userjdbc {
         return users;
     }
 
-    // =========================
-    // UPDATE
-    // =========================
+ 
+    // UPDATE user 
+
     public void updateUser(String oldUsername, User user) throws SQLException {
         String sql = "UPDATE users SET username = ?, password = ? WHERE username = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -133,9 +133,9 @@ public class Userjdbc {
         }
     }
 
-    // =========================
-    // DELETE
-    // =========================
+   
+    // DELETE user 
+    
     public void deleteUser(String username) throws SQLException {
         String sql = "DELETE FROM users WHERE username = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {

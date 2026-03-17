@@ -18,9 +18,9 @@ public class Courtsjdbc {
         this.connection = connection;
     }
 
-    // =========================
+    
     // CREATE TABLE
-    // =========================
+  
     public boolean createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS courts (" +
                 "court_id SERIAL PRIMARY KEY, " +
@@ -38,9 +38,9 @@ public class Courtsjdbc {
         }
     }
 
-    // =========================
-    // CREATE
-    // =========================
+    
+    // CREATE courtss
+ 
     public void createCourt(Courts court) throws SQLException {
         String sql = "INSERT INTO courts (name) VALUES (?)";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -49,9 +49,9 @@ public class Courtsjdbc {
         }
     }
 
-    // =========================
+    
     // READ ALL
-    // =========================
+
     public List<Courts> getAllCourts() throws SQLException {
         List<Courts> courts = new ArrayList<>();
         String sql = "SELECT court_id, name FROM courts";
@@ -64,9 +64,9 @@ public class Courtsjdbc {
         return courts;
     }
 
-    // =========================
+
     // READ BY ID
-    // =========================
+    
     public Courts getCourtById(int courtId) throws SQLException {
         String sql = "SELECT court_id, name FROM courts WHERE court_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -80,9 +80,9 @@ public class Courtsjdbc {
         return null;
     }
 
-    // =========================
-    // UPDATE
-    // =========================
+    
+    // UPDATE court
+    
     public void updateCourt(Courts court) throws SQLException {
         String sql = "UPDATE courts SET name = ? WHERE court_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -92,9 +92,9 @@ public class Courtsjdbc {
         }
     }
 
-    // =========================
+
     // DELETE
-    // =========================
+
     public void deleteCourt(int courtId) throws SQLException {
         String sql = "DELETE FROM courts WHERE court_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {

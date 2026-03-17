@@ -22,9 +22,9 @@ public class Bookingjdbc {
         this.connection = connection;
     }
 
-    // =========================
+
     // CREATE TABLE
-    // =========================
+   
     public boolean createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS booking (" +
                 "booking_id SERIAL PRIMARY KEY, " +
@@ -45,9 +45,9 @@ public class Bookingjdbc {
         }
     }
 
-    // =========================
+   
     // CREATE
-    // =========================
+   
     public void createBooking(Booking booking) throws SQLException {
         String sql = "INSERT INTO booking (user_id, court_id, start_time, end_time) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -59,9 +59,9 @@ public class Bookingjdbc {
         }
     }
 
-    // =========================
-    // READ BY ID
-    // =========================
+    
+    // READ IDd
+ 
     public Booking getBookingById(int bookingId) throws SQLException {
         String sql = "SELECT b.booking_id, b.start_time, b.end_time, " +
                 "u.username, u.password, c.court_id, c.name " +
@@ -80,9 +80,9 @@ public class Bookingjdbc {
         return null;
     }
 
-    // =========================
-    // READ ALL
-    // =========================
+
+    // READ ALL bookings
+
     public List<Booking> getAllBookings() throws SQLException {
         List<Booking> bookings = new ArrayList<>();
         String sql = "SELECT b.booking_id, b.start_time, b.end_time, " +
@@ -99,9 +99,9 @@ public class Bookingjdbc {
         return bookings;
     }
 
-    // =========================
-    // READ BY USER
-    // =========================
+  
+    // READ  bookinguser
+
     public List<Booking> getBookingsByUser(String username) throws SQLException {
         List<Booking> bookings = new ArrayList<>();
         String sql = "SELECT b.booking_id, b.start_time, b.end_time, " +
@@ -121,9 +121,9 @@ public class Bookingjdbc {
         return bookings;
     }
 
-    // =========================
+
     // UPDATE
-    // =========================
+    
     public void updateBooking(Booking booking) throws SQLException {
         String sql = "UPDATE booking SET user_id = ?, court_id = ?, start_time = ?, end_time = ? WHERE booking_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -136,9 +136,9 @@ public class Bookingjdbc {
         }
     }
 
-    // =========================
-    // DELETE
-    // =========================
+
+    // DELETE boking 
+
     public void deleteBooking(int bookingId) throws SQLException {
         String sql = "DELETE FROM booking WHERE booking_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -147,9 +147,9 @@ public class Bookingjdbc {
         }
     }
 
-    // =========================
+  
     // HELPER
-    // =========================
+
     private Booking mapBookingFromResultSet(ResultSet rs) throws SQLException {
         User user = new User(rs.getString("username"), rs.getString("password"));
         Courts court = new Courts(rs.getInt("court_id"), rs.getString("name"));

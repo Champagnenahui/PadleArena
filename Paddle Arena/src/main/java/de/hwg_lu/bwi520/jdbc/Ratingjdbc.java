@@ -19,9 +19,8 @@ public class Ratingjdbc {
         this.connection = connection;
     }
 
-    // =========================
     // CREATE TABLE
-    // =========================
+
     public boolean createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS rating (" +
                 "rating_id SERIAL PRIMARY KEY, " +
@@ -41,9 +40,9 @@ public class Ratingjdbc {
         }
     }
 
-    // =========================
+  
     // CREATE
-    // =========================
+ 
     public void createRating(Rating rating) throws SQLException {
         String sql = "INSERT INTO rating (rating, comment, user_id) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -54,9 +53,9 @@ public class Ratingjdbc {
         }
     }
 
-    // =========================
+   
     // READ BY ID
-    // =========================
+ 
     public Rating getRatingById(int ratingId) throws SQLException {
         String sql = "SELECT r.rating_id, r.rating, r.comment, " +
                 "u.username, u.password " +
@@ -74,9 +73,9 @@ public class Ratingjdbc {
         return null;
     }
 
-    // =========================
+
     // READ ALL
-    // =========================
+
     public List<Rating> getAllRatings() throws SQLException {
         List<Rating> ratings = new ArrayList<>();
         String sql = "SELECT r.rating_id, r.rating, r.comment, " +
@@ -92,9 +91,9 @@ public class Ratingjdbc {
         return ratings;
     }
 
-    // =========================
+ 
     // READ BY USER
-    // =========================
+   
     public List<Rating> getRatingsByUser(String username) throws SQLException {
         List<Rating> ratings = new ArrayList<>();
         String sql = "SELECT r.rating_id, r.rating, r.comment, " +
@@ -113,9 +112,9 @@ public class Ratingjdbc {
         return ratings;
     }
 
-    // =========================
-    // UPDATE
-    // =========================
+
+    // UPDATE ratingg
+ 
     public void updateRating(Rating rating) throws SQLException {
         String sql = "UPDATE rating SET rating = ?, comment = ? WHERE rating_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -126,9 +125,9 @@ public class Ratingjdbc {
         }
     }
 
-    // =========================
+  
     // DELETE
-    // =========================
+
     public void deleteRating(int ratingId) throws SQLException {
         String sql = "DELETE FROM rating WHERE rating_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
@@ -137,9 +136,9 @@ public class Ratingjdbc {
         }
     }
 
-    // =========================
+   
     // AVERAGE RATING
-    // =========================
+
     public double getAverageRating() throws SQLException {
         String sql = "SELECT AVG(rating) AS avg_rating FROM rating";
         try (Statement stmt = this.connection.createStatement();
@@ -151,9 +150,9 @@ public class Ratingjdbc {
         return 0.0;
     }
 
-    // =========================
+
     // HELPER
-    // =========================
+
     private Rating mapRatingFromResultSet(ResultSet rs) throws SQLException {
         User user = new User(rs.getString("username"), rs.getString("password"));
         return new Rating(
